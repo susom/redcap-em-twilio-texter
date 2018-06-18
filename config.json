@@ -1,0 +1,54 @@
+{
+  "name": "Twilio Texter",
+  "namespace": "Stanford\\TwilioTexter",
+  "description": "Module to send texts from a Twilio account",
+  "authors": [
+    {
+      "name": "Jae Lee",
+      "email": "jael@stanford.edu",
+      "institution": "Stanford University"
+    }
+  ],
+  "permissions": [
+    ""
+  ],
+  "links": {
+    "project": [
+      {
+        "name": "Send Twilio Text",
+        "icon": "gear",
+        "url": "SendTwilioText.php"
+      }
+    ]
+  },
+  "crons": [
+  ],
+  "system-settings": [
+  ],
+  "project-settings": [
+    {
+      "key": "twilio-sid",
+      "name": "Twilio SID",
+      "required": true,
+      "type": "text"
+    },
+    {
+      "key": "twilio-token",
+      "name": "Twilio token",
+      "required": true,
+      "type": "text"
+    },
+    {
+      "key": "twilio-number",
+      "name": "Twilio Number",
+      "required": true,
+      "type": "text"
+    },
+    {
+      "key": "delete-sms-from-log",
+      "name": "Delete logs from Twilio<br>Check this to delete logs from Twilio.",
+      "required": false,
+      "type": "checkbox"
+    }
+  ]
+}
