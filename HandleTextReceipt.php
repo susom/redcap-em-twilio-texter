@@ -48,7 +48,7 @@ if (!$rec_id) {
     $to =$module->getProjectSetting('email-to');
     $from = $module->getProjectSetting('email-from');
     $subject = $module->getProjectSetting('forwarding-email-subject');
-    $msg = "We have received a text from a phone number that is not in the project: " . $from_10 . ".\n" .
+    $msg = "We have received a text from a phone number that is not in the project: " . $from_10 . ".<br>" .
         "BODY OF TEXT: ".$body ;
 
     $module->sendEmail($to, $from, $subject, $msg);
@@ -64,8 +64,11 @@ $module->emLog("Text from phone " . $from_10 . " with entry: " . $body. " forwar
 $to =$module->getProjectSetting('email-to');
 $from = $module->getProjectSetting('email-from');
 $subject = $module->getProjectSetting('forwarding-email-subject');
-$msg = "We have received a text from phone number: " . $from_10 . ".\n" .
-    "BODY OF TEXT: ".$body ;
+$msg = "We have received a text from: ".
+    "<br>PHONE NUMBER: " . $from_10 .
+    "<br>RECORD_ID: " . $rec_id .
+    "<br>PROJECT ID: " . $pid .
+    "<br>BODY OF TEXT: ".$body ;
 
 $module->sendEmail($to, $from, $subject, $msg);
 
