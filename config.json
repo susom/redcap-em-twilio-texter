@@ -15,17 +15,26 @@
   "links": {
     "project": [
       {
-        "name": "Send Twilio Text",
+        "name": "TwilioTexter: Send Twilio Text",
         "icon": "gear",
         "url": "SendTwilioText.php"
       }
     ]
   },
+  "no-auth-pages": [
+    "HandleTextReceipt"
+  ],
   "crons": [
   ],
   "system-settings": [
   ],
   "project-settings": [
+    {
+      "key": "enable-project-debug-logging",
+      "name": "<b>Enable Debug Logging</b>",
+      "required": false,
+      "type": "checkbox"
+    },
     {
       "key": "twilio-sid",
       "name": "Twilio SID",
@@ -49,6 +58,83 @@
       "name": "Delete logs from Twilio<br>Check this to delete logs from Twilio.",
       "required": false,
       "type": "checkbox"
+    },
+   {
+      "key": "handle-incoming-text",
+      "name": "Handle Incoming Text<br>Do you want this EM to forward texts to your email?",
+      "required": false,
+      "type": "checkbox"
+    },
+    {
+      "key": "email-to",
+      "name": "Forward texts to this email",
+      "required": true,
+      "type": "text",
+      "branchingLogic": {
+        "field": "handle-incoming-text",
+        "value": "1"
+      }
+    },
+    {
+      "key": "email-from",
+      "name": "Send email from this email address",
+      "required": true,
+      "type": "text",
+      "branchingLogic": {
+        "field": "handle-incoming-text",
+        "value": "1"
+      }
+    },
+    {
+      "key": "forwarding-email-subject",
+      "name": "Specify subject of email",
+      "required": true,
+      "type": "text",
+      "branchingLogic": {
+        "field": "handle-incoming-text",
+        "value": "1"
+      }
+    },
+    {
+      "key": "phone-lookup-field",
+      "name": "Lookup phone number in this field",
+      "required": true,
+      "type": "field-list",
+      "branchingLogic": {
+        "field": "handle-incoming-text",
+        "value": "1"
+      }
+    },
+    {
+      "key": "phone-lookup-field-event",
+      "name": "Event where phone field is located",
+      "required": true,
+      "type": "event-list",
+      "branchingLogic": {
+        "field": "handle-incoming-text",
+        "value": "1"
+      }
+    },
+    {
+      "key": "log-field",
+      "name": "If you want to log this text receipt, specify the field",
+      "required": false,
+      "type": "field-list",
+      "branchingLogic": {
+        "field": "handle-incoming-text",
+        "value": "1"
+      }
+    },
+    {
+      "key": "log-field-event",
+      "name": "If you want to log this text receipt, specify the event where the log field is located",
+      "required": false,
+      "type": "event-list",
+      "branchingLogic": {
+        "field": "log-field",
+        "op": "<>",
+        "value": ""
+      }
     }
   ]
 }
