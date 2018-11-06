@@ -19,7 +19,7 @@ $phone_field = $module->getProjectSetting('phone-lookup-field');
 $phone_field_event = $module->getProjectSetting('phone-lookup-field-event');
 
 // Get the phone number to search REDCap
-$from = $_POST['from'];
+$from = $_POST['From'];
 
 if (!isset($from)) {
     $module->emLog("No phone number reported");
