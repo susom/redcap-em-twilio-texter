@@ -65,25 +65,22 @@ if (!empty($_POST['action'])) {
 </head>
 <body>
 <div class="container">
-    <div class="jumbotron">
-        <h3>Send Text from this Twilio number: <?php echo $module->getProjectSetting("twilio-number");
-            ?></h3>
-    </div>
-    <div class="well">
-        <div class="container">
-            <div class="form-group">
-                <div class='input-group date'>
-                    <span class="input-group-addon">phone number</span>
-                    <input name="phone_number" type='tel' class="form-control"/>
-                </div>
+    <hr>
+    <h2>Sending text from this Twilio number: <?php echo $module->getProjectSetting("twilio-number");?></h2>
+    <hr>
 
-            </div>
-            <textarea id="message" name="message" rows="5" cols="40"></textarea>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="stanford_mrn">Phone Number </label>
+            <input type="text" class="form-control" id="phone_number" name="phone_number">
         </div>
-    </div>
-</div>
+        <div class="form-group col-md-8">
+            <label for="last_name">Text Message</label>
+            <textarea class="form-control" id="message" name="message"  rows="5" cols="40"></textarea>
+        </div>
 
-<div class="panel-footer">
+    </div>
+
     <button class="btn btn-primary" name="submit" onclick="submit()">SEND TEXT</button>
 </div>
 

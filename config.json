@@ -18,6 +18,11 @@
         "name": "TwilioTexter: Send Twilio Text",
         "icon": "gear",
         "url": "SendTwilioText.php"
+      },
+      {
+        "name": "TwilioTexter: Display Webhook link",
+        "icon": "gear",
+        "url": "DisplayWebHookLink.php"
       }
     ]
   },

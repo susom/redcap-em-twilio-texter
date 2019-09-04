@@ -6,6 +6,10 @@ use REDCap;
 /**
  *
  * This is called from Twilio Webhook set up from the calling number
+ *
+ * Set this up under
+ * Messaging: WEbhook
+ * https://redcap.stanford.edu/api/?type=module&prefix=twilio_texter&page=HandleTextReceipt&pid=8384&NOAUTH
  */
 
 /** @var \Stanford\TwilioTexter\TwilioTexter $module */

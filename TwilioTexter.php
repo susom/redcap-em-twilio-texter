@@ -4,6 +4,7 @@ namespace Stanford\TwilioTexter;
 use Plugin;
 use REDCap;
 use Services_Twilio;
+use TwiML;
 use Exception;
 use Message;
 
@@ -187,56 +188,60 @@ class TwilioTexter extends \ExternalModules\AbstractExternalModule {
     }
 
 
-/**
- * Log the STOP text to the sms_log
- *
- * @param $rec_id
- */
-function logSms($log_field, $log_event, $rec_id, $msg_info) {
-    $msg = array();
-    $msg[] = "---- " . date("Y-m-d H:i:s") . " ----";
-    $msg[] = $msg_info;
+    /**
+     * * Log the STOP text to the sms_log
+     *
+     * @param $log_field
+     * @param $log_event
+     * @param $rec_id
+     * @param $msg_info
+     * @return mixed
+     */
+    function logSms($log_field, $log_event, $rec_id, $msg_info) {
+        $msg = array();
+        $msg[] = "---- " . date("Y-m-d H:i:s") . " ----";
+        $msg[] = $msg_info;
 
-    $data = array(
-        REDCap::getRecordIdField() => $rec_id,
-        'redcap_event_name' => $log_event,
-        $log_field => implode("\n", $msg),
+        $data = array(
+            REDCap::getRecordIdField() => $rec_id,
+            'redcap_event_name' => $log_event,
+            $log_field => implode("\n", $msg),
 
-    );
+        );
 
-    REDCap::saveData($data);
-    $response = REDCap::saveData('json', json_encode(array($data)));
-    //$this->emDebug($response,  "Save Response for count");
+        REDCap::saveData($data);
+        $response = REDCap::saveData('json', json_encode(array($data)));
+        //$this->emDebug($response,  "Save Response for count");
 
 
-    if (!empty($response['errors'])) {
-        $msg = "Error creating record - ask administrator to review logs: " . json_encode($response);
-        $this->emDebug($msg);
-        return ($response);
+        if (!empty($response['errors'])) {
+            $msg = "Error creating record - ask administrator to review logs: " . json_encode($response);
+            $this->emDebug($msg);
+            return ($response);
+        }
+
     }
 
-}
+    function sendEmail($to, $from, $subject, $msg)
+    {
 
-function sendEmail($to, $from, $subject, $msg)
-{
+        // Prepare message
+        $email = new Message();
+        $email->setTo($to);
+        $email->setFrom($from);
+        $email->setSubject($subject);
+        $email->setBody($msg);
 
-    // Prepare message
-    $email = new Message();
-    $email->setTo($to);
-    $email->setFrom($from);
-    $email->setSubject($subject);
-    $email->setBody($msg);
+        //logIt("about to send " . print_r($email,true), "DEBUG");
 
-    //logIt("about to send " . print_r($email,true), "DEBUG");
+        // Send Email
+        if (!$email->send()) {
+            $module->emLog('Error sending mail: ' . $email->getSendError() . ' with ' . json_encode($email));
+            return false;
+        }
 
-    // Send Email
-    if (!$email->send()) {
-        $module->emLog('Error sending mail: ' . $email->getSendError() . ' with ' . json_encode($email));
-        return false;
+        return true;
     }
-
-    return true;
-}
 
 
       /**
