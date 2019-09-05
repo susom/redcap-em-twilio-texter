@@ -110,9 +110,15 @@ class TwilioTexter extends \ExternalModules\AbstractExternalModule {
         global $module;
 
         $emTexter = \ExternalModules\ExternalModules::getModuleInstance('twilio_utility');
-        $this->emDebug($emTexter);
+        //$this->emDebug($emTexter);
         $text_status = $emTexter->emSendSms($number, $text);
         return $text_status;
+    }
+
+    function getNumber() {
+        $emTexter = \ExternalModules\ExternalModules::getModuleInstance('twilio_utility');
+        $em_number = $emTexter->emGetNumber();
+        return $em_number;
     }
 
 

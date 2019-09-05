@@ -66,7 +66,7 @@ if (!empty($_POST['action'])) {
 <body>
 <div class="container">
     <hr>
-    <h2>Sending text from this Twilio number: <?php echo $module->getProjectSetting("twilio-number");?></h2>
+    <h2>Sending text from this Twilio number : <?php echo $module->getNumber();?></h2>
     <hr>
 
     <div class="form-row">
