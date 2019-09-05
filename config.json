@@ -41,30 +41,12 @@
       "type": "checkbox"
     },
     {
-      "key": "twilio-sid",
-      "name": "Twilio SID",
-      "required": true,
-      "type": "text"
-    },
-    {
-      "key": "twilio-token",
-      "name": "Twilio token",
-      "required": true,
-      "type": "text"
-    },
-    {
-      "key": "twilio-number",
-      "name": "Twilio Number",
-      "required": true,
-      "type": "text"
-    },
-    {
-      "key": "delete-sms-from-log",
-      "name": "Delete logs from Twilio<br>Check this to delete logs from Twilio.",
+      "key": "sms-twilio-desc",
+      "name": "<div class='alert alert-danger'><h3 class='text-center'>Install Twilio Utility EM</h3><br>The use of this EM REQUIRES that a separate EM (Twilio Utility) be installed and enabled globally.</div>",
       "required": false,
-      "type": "checkbox"
+      "type": "descriptive"
     },
-   {
+    {
       "key": "handle-incoming-text",
       "name": "Handle Incoming Text<br>Do you want this EM to forward texts to your email?",
       "required": false,

@@ -16,8 +16,6 @@ use REDCap;
 
 $module->emDebug('--- Incoming Text to Twilio ---');
 
-$webhook = $module->getUrl("HandleTextReceipt.php", true, true);
-$module->emDebug($webhook);
 //$module->emDebug($_POST);
 
 $phone_field = $module->getProjectSetting('phone-lookup-field');

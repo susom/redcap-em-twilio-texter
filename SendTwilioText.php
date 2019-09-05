@@ -15,7 +15,7 @@ if (!empty($_POST['action'])) {
             $phone = $_POST["phone"];
             $message = $_POST["message"];
 
-            $status = $module->sendText($phone, $message);
+            $status = $module->emText($phone, $message);
 
             if ($status === true) {
                 $result = array('result' => 'success');
