@@ -12,21 +12,42 @@ if (!empty($_POST['action'])) {
 
     switch ($action) {
         case "send":
-            $phone = $_POST["phone"];
-            $message = $_POST["message"];
+            $phone_numbers = explode(',',  $_POST["phone"]);
+            $message       = $_POST["message"];
 
-            $status = $module->emText($phone, $message);
+            $sent = array();   //hold sent numbers for reporting
+            $unsent = array();
 
-            if ($status === true) {
+            foreach ($phone_numbers as $phone) {
+
+                $status = $module->emText($phone, $message);
+
+                if ($status === true) {
+
+                    $sent[] = $phone;
+
+                } else {
+                    $unsent[] = $phone;
+                    $msg = "Error sending text sent to $phone: ".$message. " ERROR: ".$status;
+                    REDCap::logEvent("TwilioTexter Module", $msg);
+
+                }
+            }
+
+            //report the successes to logging
+            if (!empty($sent)) {
+                $msg = "Text sent to ".implode(' ,',$sent)." with message:  ".$message;
+                REDCap::logEvent("TwilioTexter Module", $msg);
+            }
+
+            if (empty($unsent)) {
                 $result = array('result' => 'success');
-                $msg = "Text sent to $phone: ".$message;
-                REDCap::logEvent("TwilioTexter Module", $msg);
             } else {
-                $msg = "Error sending text sent to $phone: ".$message. " ERROR: ".$status;
-                REDCap::logEvent("TwilioTexter Module", $msg);
+
+                $module->emDebug("FAILED send to ".implode(' ,',$unsent));
                 $result = array(
                     'result' => 'fail',
-                    'error' => $status);
+                    'error' => "Unable to send to these numbers: ".implode(' ,',$unsent));
             }
 
             header('Content-Type: application/json');
@@ -34,14 +55,13 @@ if (!empty($_POST['action'])) {
             exit();
             break;
         default:
-            Plugin::log($_POST, "Unknown Action in Save");
             print "Unknown action";
     }
 }
 
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title><?php echo $module->getModuleName() ?></title>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
@@ -60,8 +80,6 @@ if (!empty($_POST['action'])) {
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
 
-
-    <!-- Add local css and js for module -->
 </head>
 <body>
 <div class="container">
@@ -70,11 +88,11 @@ if (!empty($_POST['action'])) {
     <hr>
 
     <div class="form-row">
-        <div class="form-group col-md-4">
+        <div class="form-group col-md-6">
             <label for="stanford_mrn">Phone Number </label>
-            <input type="text" class="form-control" id="phone_number" name="phone_number">
+            <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Comma separated list of phone numbers">
         </div>
-        <div class="form-group col-md-8">
+        <div class="form-group col-md-6">
             <label for="last_name">Text Message</label>
             <textarea class="form-control" id="message" name="message"  rows="5" cols="40"></textarea>
         </div>
@@ -83,6 +101,8 @@ if (!empty($_POST['action'])) {
 
     <button class="btn btn-primary" name="submit" onclick="submit()">SEND TEXT</button>
 </div>
+</body>
+</html>
 
 
 <script type="text/javascript">
@@ -112,13 +132,13 @@ if (!empty($_POST['action'])) {
                 } else {
                     // an error occurred
                     console.log(data);
-                    alert("Error texting to " +phone.val()+" \n\nERROR: " + data.error);
+                    alert("ERROR: " + data.error);
                 }
 
             })
             .fail(function (data) {
                 console.log(data);
-                alert(data.result + "Unable to send <br><br>" + data.error + data.message );
+                alert(data.result + "Unable to send " + data.error + data.message );
             })
             .always(function () {
                 saveBtn.prop('disabled', false);
