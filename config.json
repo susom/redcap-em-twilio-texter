@@ -22,7 +22,7 @@
       {
         "name": "TwilioTexter: Display Webhook link",
         "icon": "gear",
-        "url": "DisplayWebHookLink.php"
+        "url": "DisplayWebhookLink.php"
       }
     ]
   },
