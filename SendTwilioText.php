@@ -88,7 +88,7 @@ if (!empty($_POST['action'])) {
     <hr>
 
     <div class="form-row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-4">
             <label for="stanford_mrn">Phone Number </label>
             <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Comma separated list of phone numbers">
         </div>

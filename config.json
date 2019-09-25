@@ -17,12 +17,15 @@
       {
         "name": "TwilioTexter: Send Twilio Text",
         "icon": "gear",
-        "url": "SendTwilioText.php"
+        "url": "SendTwilioText.php",
+        "show-header-and-footer": true
+
       },
       {
         "name": "TwilioTexter: Display Webhook link",
         "icon": "gear",
-        "url": "DisplayWebhookLink.php"
+        "url": "DisplayWebhookLink.php",
+        "show-header-and-footer": true
       }
     ]
   },
